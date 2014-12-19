@@ -25,10 +25,12 @@ function getLongestKey(obj) {
     return maxL;
 }
 
-function generateUsage(flags) {
+function generateUsage(flags, meta) {
     // Generate a usage string given some flag object.
     var options = "Options:",
         longestKey = getLongestKey(flags);
+    if (meta && meta.description)
+        options = meta.description + '\n' + options;
     for (var f in flags) {
         if (!flags.hasOwnProperty(f))
             continue;
@@ -64,11 +66,11 @@ function splitEquals(array) {
 }
 
 // export parsing function that returns a map, and usage generator
-module.exports = function(flags, quiet, args) {
+module.exports = function(flags, meta, quiet, args) {
     if (args === undefined)
         args = process.argv;
     if (any_in(['--help', '-h', '--usage'], args)) {
-        console.log(generateUsage(flags));
+        console.log(generateUsage(flags, meta));
         return null;
     }
     args = splitEquals(args);

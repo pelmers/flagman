@@ -13,23 +13,23 @@ var tests = {
             }
         };
         args = [];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.flag !== 'true')
             return "-flag didn't get default option, got " + parsed.flag;
 
         args = ['-flag', 'false'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.flag !== 'false')
             return "-flag not set correctly, got " + parsed.flag;
 
         args = ['-flag=false'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.flag !== 'false')
             return "-flag=false is not false, got " + parsed.flag;
 
         // invalid arg should reset to default
         args = ['-flag', 'INVALID'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.flag !== 'true')
             return "invalid option not ignored, got " + parsed.flag;
         return true;
@@ -44,12 +44,12 @@ var tests = {
             }
         };
         args = [];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.bool !== false)
             return "-bool did not get default, got " + parsed.bool;
 
         args = ['-bool'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.bool !== true)
             return "-bool is not true, got " + parsed.bool;
         return true;
@@ -63,15 +63,15 @@ var tests = {
             }
         };
         args = [];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.nodef !== undefined)
             return "nodef did not get default, got " + parsed.nodef;
         args = ['-nodef', 'false'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.nodef !== 'false')
             return "expected false, got " + parsed.nodef;
         args = ['-nodef', 'INVALID'];
-        parsed = flagman(flags, true, args);
+        parsed = flagman(flags, true, {}, args);
         if (parsed.nodef !== undefined)
             return "expected undefined, got " + parsed.nodef;
         return true;
