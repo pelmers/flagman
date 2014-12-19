@@ -61,7 +61,7 @@ function splitEquals(array) {
 }
 
 // export parsing function that returns a map, and usage generator
-module.exports = function(flags, args) {
+module.exports = function(flags, quiet, args) {
     if (args === undefined)
         args = process.argv;
     if (any_in(['--help', '-h', '--usage'], args)) {
@@ -89,9 +89,15 @@ module.exports = function(flags, args) {
             if (flags[flag].validOptions !== undefined) {
                 if (_in(nextArg, flags[flag].validOptions))
                     opts[flagProp] = nextArg;
+                else if (!quiet)
+                    console.log("Argument " + nextArg + " to " + flag + " not in ["
+                            + flags[flag].validOptions.toString() + "], skipping...");
             } else if (flags[flag].validRegex !== undefined) {
                 if (flags[flag].validRegex.test(nextArg))
                     opts[flagProp] = nextArg;
+                else if (!quiet)
+                    console.log("Argument " + nextArg + " to " + flag + " did not match "
+                            + flags[flag].validRegex.toString() + ", skipping...");
             } else {
                 opts[flagProp] = nextArg;
             }
