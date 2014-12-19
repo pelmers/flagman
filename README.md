@@ -1,9 +1,10 @@
-flagman.js
-----------
+[flagman.js](https://www.npmjs.com/package/flagman)
+------------
 
 Parse command flags and generate usage text.
 
 Install: `npm install flagman`
+
 Test: `npm test`
 
 ### Example usage:
