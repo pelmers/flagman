@@ -42,7 +42,10 @@ function generateUsage(flags) {
         if (flags[f].default)
             options += " Default: " + flags[f].default + ".";
         if (flags[f].validOptions)
-            options += " Valid: " + flags[f].validOptions.toString();
+            if (flags[f].validOptions.length !== 0)
+                options += " Valid: " + flags[f].validOptions.toString();
+        if (flags[f].validRegex)
+            options += " Matches: " + flags[f].validRegex.toString();
     }
     return options;
 }

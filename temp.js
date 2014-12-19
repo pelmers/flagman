@@ -1,14 +1,4 @@
-flagman.js
-----------
-
-Parse command flags and generate usage text.
-
-Install: `npm install flagman`
-Test: `npm test`
-
-### Example usage:
-```js
-var args = require('flagman')({
+var args = require('./flagman.js')({
     // Define flags here
     '--flag1': {
         'default': 'Default',
@@ -25,12 +15,4 @@ var args = require('flagman')({
         'validRegex': /\d{4}-\d{2}-\d{2}/
     }
 });
-```
 
-Help text for the above:
-```
-Options:
-  --flag1   Default: Default. Valid: Default,NotDefault
-  -bool
-  --date    Default: 2014-09-10. Matches: /\d{4}-\d{2}-\d{2}/
-```
