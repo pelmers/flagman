@@ -25,11 +25,14 @@ var args = require('flagman')({
         // Validate on regular expression
         'validRegex': /\d{4}-\d{2}-\d{2}/
     }
+}, {
+    description: "This is a description printed at the top of the help text."
 });
 ```
 
 Help text for the above:
 ```
+This is a description printed at the top of the help text.
 Options:
   --flag1   Default: Default. Valid: Default,NotDefault
   -bool
