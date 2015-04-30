@@ -3,14 +3,14 @@
 
 function _in(elem, array) {
     // Return whether elem is strictly a member of array
-    return array.some(function(el) {
+    return array.some(function (el) {
         return elem === el;
     });
 }
 
 function any_in(elems, array) {
     // Return whether any of elems are in array
-    return elems.some(function(el) {
+    return elems.some(function (el) {
         return _in(el, array);
     });
 }
@@ -57,8 +57,8 @@ function splitEquals(array) {
     // [--something=flag] -> [--something, flag]
     // Does not modify the passed in array.
     var out = [];
-    array.forEach(function(elem) {
-        elem.split('=').forEach(function(e) {
+    array.forEach(function (elem) {
+        elem.split('=').forEach(function (e) {
             out.push(e);
         });
     });
@@ -66,7 +66,7 @@ function splitEquals(array) {
 }
 
 // export parsing function that returns a map, and usage generator
-module.exports = function(flags, meta, quiet, args) {
+module.exports = function (flags, meta, quiet, args) {
     if (args === undefined)
         args = process.argv;
     if (any_in(['--help', '-h', '--usage'], args)) {
@@ -79,11 +79,11 @@ module.exports = function(flags, meta, quiet, args) {
         if (!flags.hasOwnProperty(flag))
             continue;
         // strip leading - or -- to get something we can access as a prop
-        flagProp = flag.replace(/--?/, '');
+        var flagProp = flag.replace(/--?/, '');
         opts[flagProp] = flags[flag].default;
         // if the flag has no valid options, we only care whether it exists
         if (flags[flag].validOptions !== undefined &&
-                flags[flag].validOptions.length === 0) {
+            flags[flag].validOptions.length === 0) {
             opts[flagProp] = _in(flag, args);
             continue;
         }
@@ -96,17 +96,17 @@ module.exports = function(flags, meta, quiet, args) {
                     opts[flagProp] = nextArg;
                 else if (!quiet)
                     console.log("Argument " + nextArg + " to " + flag + " not in ["
-                            + flags[flag].validOptions.toString() + "], skipping...");
+                        + flags[flag].validOptions.toString() + "], skipping...");
             } else if (flags[flag].validRegex !== undefined) {
                 if (flags[flag].validRegex.test(nextArg))
                     opts[flagProp] = nextArg;
                 else if (!quiet)
                     console.log("Argument " + nextArg + " to " + flag + " did not match "
-                            + flags[flag].validRegex.toString() + ", skipping...");
+                        + flags[flag].validRegex.toString() + ", skipping...");
             } else {
                 opts[flagProp] = nextArg;
             }
         }
     }
     return opts;
-}
+};
